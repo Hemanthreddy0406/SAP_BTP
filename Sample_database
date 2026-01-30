@@ -1,0 +1,27 @@
+entity Manufacturer {
+  key manufacturerID : Integer;
+  name               : String(100);
+  country            : String(50);
+}
+
+entity Car {
+  key carID        : Integer;
+  model            : String(100);
+  year             : Integer;
+  price            : Decimal(10,2);
+  manufacturerName : String(100);
+}
+
+entity Engine {
+  key engineID : Integer;
+  engineType   : String(50);
+  horsepower   : Integer;
+  fuelType     : String(30);
+}
+
+entity Owner {
+  key ownerID  : Integer;
+  ownerName   : String(100);
+  contactNo   : String(15);
+  carModel    : String(100);
+}
