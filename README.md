@@ -5,3 +5,4 @@ Day_1: SAP_BTP basics and fundamentals. The core concepts of SAP_BTP like terms 
 Day_2: SAP_BTP trail account creation procedure, skills rquired to become sap cloud platform developer.
 Day_3: HTML5, CSS, and JavaScript, Jquery.
 Day_4: Creation of workspace and selection of required services.
+Day_5: 
