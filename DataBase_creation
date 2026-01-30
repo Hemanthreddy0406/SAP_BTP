@@ -1,0 +1,271 @@
+# Database Creation in SAP BTP
+
+*(Using SAP Cloud Application Programming Model – CAP)*
+
+---
+
+## 1. Introduction to SAP BTP
+
+**SAP Business Technology Platform (SAP BTP)** is SAP’s unified platform that enables developers to build, deploy, and extend enterprise applications.
+
+### Key Capabilities of SAP BTP
+
+* Application development
+* Database and data management
+* Integration
+* Analytics
+* Security
+
+For database creation in application development, **SAP CAP (Cloud Application Programming Model)** is commonly used.
+
+---
+
+## 2. What is SAP CAP?
+
+**SAP Cloud Application Programming Model (CAP)** is a framework provided by SAP to build enterprise-ready applications efficiently.
+
+### Main Characteristics of CAP
+
+* Model-driven development
+* Database-agnostic
+* Built-in best practices
+* Faster development lifecycle
+
+CAP applications are mainly structured using:
+
+* **CDS (Core Data Services)**
+* Node.js or Java
+* SAP HANA or SQLite database
+
+---
+
+## 3. Role of Database in SAP CAP
+
+In SAP CAP:
+
+* The database layer is defined using **CDS files**
+* Database tables are represented as **entities**
+* No manual SQL table creation is required
+* CAP automatically generates tables from CDS models
+
+👉 This makes database creation **simple, consistent, and error-free**.
+
+---
+
+## 4. Project Structure for Database Layer
+
+A typical CAP project structure:
+
+```
+project-root/
+ ├── db/
+ │    └── schema.cds
+ ├── srv/
+ │    └── service.cds
+ ├── package.json
+```
+
+### Purpose of `db` Folder
+
+* Contains database definitions
+* Holds all **entities (tables)**
+* Acts as the **persistence layer**
+
+---
+
+## 5. What is `schema.cds`?
+
+`schema.cds` is the **core database definition file** in CAP.
+
+### Functions of `schema.cds`
+
+* Defines database tables
+* Specifies attributes and data types
+* Declares primary keys
+* Acts as the single source of truth for the DB
+
+---
+
+## 6. Namespace in `schema.cds`
+
+```cds
+namespace my.cars;
+```
+
+### Why Namespace is Important
+
+* Avoids naming conflicts
+* Groups related entities logically
+* Recommended best practice in CAP
+
+---
+
+## 7. Entity Concept in CAP
+
+An **entity** in CAP represents a **database table**.
+
+### Entity Components
+
+* Entity name → Table name
+* Key → Primary key
+* Elements → Table columns
+
+### Example
+
+```cds
+entity Car {
+  key carID : Integer;
+  model     : String;
+}
+```
+
+This creates a table **Car** with:
+
+* `carID` as primary key
+* `model` as a column
+
+---
+
+## 8. Data Types Used in CAP
+
+| CDS Data Type | Description                   |
+| ------------- | ----------------------------- |
+| Integer       | Whole numbers                 |
+| String(n)     | Character data                |
+| Decimal(p,s)  | Numeric values with precision |
+| Boolean       | True/False                    |
+| Date          | Date values                   |
+
+---
+
+## 9. Database Design Example – Cars Database
+
+### Objective
+
+To design a simple car-related database without relationships.
+
+---
+
+### 9.1 Manufacturer Entity
+
+```cds
+entity Manufacturer {
+  key manufacturerID : Integer;
+  name               : String(100);
+  country            : String(50);
+}
+```
+
+**Explanation**
+
+* `manufacturerID` → Primary key
+* `name` → Manufacturer name
+* `country` → Country of origin
+
+---
+
+### 9.2 Car Entity
+
+```cds
+entity Car {
+  key carID        : Integer;
+  model            : String(100);
+  year             : Integer;
+  price            : Decimal(10,2);
+  manufacturerName : String(100);
+}
+```
+
+**Explanation**
+
+* Stores car details
+* Manufacturer stored as a simple attribute
+* No foreign key or association used
+
+---
+
+### 9.3 Engine Entity
+
+```cds
+entity Engine {
+  key engineID : Integer;
+  engineType   : String(50);
+  horsepower   : Integer;
+  fuelType     : String(30);
+}
+```
+
+**Explanation**
+
+* Represents engine specifications
+* Independent table
+* Can be linked logically at application level
+
+---
+
+### 9.4 Owner Entity
+
+```cds
+entity Owner {
+  key ownerID : Integer;
+  ownerName  : String(100);
+  contactNo  : String(15);
+  carModel   : String(100);
+}
+```
+
+**Explanation**
+
+* Stores ownership details
+* Uses car model as plain text
+* No relational constraint
+
+---
+
+## 10. How CAP Creates the Database Automatically
+
+### Steps
+
+1. Developer defines entities in `schema.cds`
+2. CAP reads the CDS model
+3. Tables are generated automatically
+4. Database is created when the app runs
+
+Command used:
+
+```bash
+cds watch
+```
+
+---
+
+## 11. Advantages of Database Creation Using CAP
+
+* No manual SQL scripting
+* Database-independent (HANA / SQLite)
+* Faster development
+* Clean separation of layers
+* Easy maintenance and scalability
+
+---
+
+## 12. Real-Time Usage in SAP BTP
+
+In SAP BTP:
+
+* CDS models are deployed to **SAP HANA Cloud**
+* Tables are created automatically
+* Secure and scalable enterprise-grade DB
+
+---
+
+## 13. Conclusion
+
+Database creation in SAP BTP using CAP:
+
+* Is **model-driven**
+* Uses **CDS entities instead of SQL**
+* Promotes clean architecture
+* Simplifies enterprise application development
+
+This approach is widely used in **real-time SAP projects**.
